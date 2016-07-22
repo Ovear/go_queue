@@ -19,7 +19,8 @@ func init() {
 	ch = tools.GetHandlerChan()
 	mainWg = tools.GetMainWg()
 	logger.InfoF("queue handler thread num [%d]", threadNum)
-	initUnhandledTasks()
+	//这里使用一个新的线程处理，防止因为 channel 长度不足导致的死锁
+	go initUnhandledTasks()
 }
 
 func initUnhandledTasks() {
